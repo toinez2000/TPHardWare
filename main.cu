@@ -64,7 +64,7 @@ int main() {
 
 */
     main2 ();
-    cudaDeviceSynchronize();
+    //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
 
