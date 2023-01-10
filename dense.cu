@@ -7,7 +7,13 @@
 #include "dense.h"
 
 
+__global__ void addBias(float *input,float *bias){
+    
+  int ip = threadIdx.x;
 
+  output[ip] += bias[ip];
+
+}
 
 __global__ void Dense(float *input,float *weight,float *output,int SxI,int Sxo){
     
@@ -62,11 +68,11 @@ float* vectorGPUDense (float* input, float* Weight,float *output,int SxI,int Sxo
 
 
 	cudaMalloc((void**)&d_input, sizeof(float)*SxI);
-    	cudaMalloc((void**)&d_Weight, sizeof(float)*SxI);
+    	cudaMalloc((void**)&d_Weight, sizeof(float)*SxI*Sxo+Sxo);
     	cudaMalloc((void**)&d_out, sizeof(float)*Sxo);
       cudaMalloc((void**)&d_sum, sizeof(float));
 	
-    	cudaMemcpy(d_Weight, Weight, sizeof(float) *SxI, cudaMemcpyHostToDevice);
+    	cudaMemcpy(d_Weight, Weight, sizeof(float) *SxI*Sxo+Sxo, cudaMemcpyHostToDevice);
     	cudaMemcpy(d_input, input, sizeof(float) *SxI, cudaMemcpyHostToDevice);
       cudaMemcpy(d_out,output,sizeof(float) *Sxo,cudaMemcpyHostToDevice);
       cudaMemcpy(d_sum,sum,sizeof(float),cudaMemcpyHostToDevice);
@@ -79,7 +85,7 @@ float* vectorGPUDense (float* input, float* Weight,float *output,int SxI,int Sxo
       
 
     	 Dense<<<threadsPerBlock,blocks>>>(d_input, d_Weight, d_out, SxI,  Sxo);   //SIZE_C1_kernel
- 
+ 	 addBias<<<Sxo,1>>>(d_out,d_Weight+SxI*Sxo);
       if(ActiveFunction==0){DTanH<<<1,Sxo>>>(d_out,Sxo);} //TanH
       else{
           
