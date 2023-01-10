@@ -37,7 +37,7 @@ void c_hello(){
 int main() {
  
 
-readfile();
+//readfile();
 
 
  /*

@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-int readfile() {
+float* readfile() {
   float*WeightVector;
  
   float val;
@@ -31,6 +31,9 @@ int readfile() {
 
   for(int i=0; i<SizeWeight; i++){
     fread(&val, sizeof(float), 1, fptr);
-    printf("%f \n",val);
+    WeightVector[i] = val;
+    //printf("%f \n",val);
+
+    return WeightVector;
   }
 }

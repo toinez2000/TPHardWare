@@ -1,1 +1,1 @@
-int readfile();
+float* readfile();
