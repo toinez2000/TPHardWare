@@ -6,30 +6,21 @@
 #include <cuda_runtime.h>
 #include "functionMatrix.h"
 #include "modele.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <assert.h>
-#include <cuda.h>
-#include <cuda_runtime.h>
-#include <math.h>
-
-
+#include "readfileWeight.h"
 #include "functionMatrix.h"
 #include "dense.h"
 #include "convolutionLayer.h"
 #include "meanPoolingTanH.h"
 
-#define SIZE_raw_data  6  //32
-#define DEEP_raw_data  1  //32
-#define SIZE_C1_kernel 3   //5
-#define DEEP_K1 2//6
+#define SIZE_raw_data  32
+#define DEEP_raw_data  32
+#define SIZE_C1_kernel 5
+#define DEEP_K1 6
 #define SIZE_C1_data (SIZE_raw_data-SIZE_C1_kernel+1)
 #define SIZE_S1_data (SIZE_C1_data/2)        //14
 
-#define SIZE_C2_kernel 3   //5
-#define DEEP_K2 6//16
+#define SIZE_C2_kernel 5
+#define DEEP_K2 16
 #define SIZE_C2_data (SIZE_S1_data-SIZE_C2_kernel+1)
 #define SIZE_S2_data (SIZE_C2_data/2)  
 
@@ -59,7 +50,19 @@ int modele(){
     float *S4_data,*WeightD2;
     float *S5_data,*WeightD3;
 
-    // Allocate memory
+    // Allocate memory and mapping
+    
+    float*WeightVector = readfile();
+    
+    C1_kernel = WeightVector;
+    C2_kernel = C1_kernel+SIZE_C1_kernel*SIZE_C1_kernel*DEEP_K1+DEEP_K1;
+    WeightD1 = C2_kernel+SIZE_C2_kernel*SIZE_C2_kernel*DEEP_K2*DEEP_K1+DEEP_K2;
+    WeightD2 = WeightD1+SIZE_S2_data*SIZE_S3_data+SIZE_S3_data;
+    WeightD3 = WeightD2+SIZE_S3_data*SIZE_S4_data+SIZE_S4_data;
+        
+        
+        
+    /*
     raw_data   = init_matrix(SIZE_raw_data, SIZE_raw_data);
     C1_kernel   = init_matrix(SIZE_C1_kernel *DEEP_K1, SIZE_C1_kernel );
 
@@ -73,7 +76,7 @@ int modele(){
         C1_kernel[i+j*SIZE_C1_kernel*SIZE_C1_kernel]=0.0;
       }
     }
-
+*/
 
 /*
 keras.layers.Conv2D(16, kernel_size=5, strides=1, activation='tanh', padding='valid'), #C3
@@ -120,11 +123,15 @@ keras.layers.Conv2D(16, kernel_size=5, strides=1, activation='tanh', padding='va
     printf("S1 \n\n");
      print_matrix(S1_data,SIZE_S1_data*DEEP_K1,SIZE_S1_data);
 
-
+\\free
     free(raw_data);
-    free(C1_data);
+    free(WeightVector);
     free(S1_data);
-    free(C1_kernel);
+    free(S2_data);
+    free(S3_data);
+    free(S4_data);
+    free(S5_data);
+  
 
     return 0;
 }
