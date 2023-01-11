@@ -1,3 +1,4 @@
+-o
 **Human Activity Recognition using CNN in Keras**
 
 
@@ -75,6 +76,3 @@ Cela correspond bien à ce qui est attendu.
 
 
 *couche dense*
-
-
-

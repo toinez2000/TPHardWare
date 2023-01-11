@@ -3,12 +3,13 @@
 
 #include "vector_add_N_P.h"
 #include "vector_multi_N_P.h"
-#include "mainCNN.h"
+
 #include <stdlib.h>
 
 #include "functionMatrix.h"
 
-
+#include "modele.h"
+#include "readfileWeight.h"
 
 __global__ void cuda_hello(){
     printf("Hello World from GPU!\n");
@@ -36,7 +37,7 @@ void c_hello(){
 int main() {
  
 
-
+//readfile();
 
 
  /*
@@ -63,7 +64,7 @@ int main() {
 
 
 */
-    main2 ();
+    modele();
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
