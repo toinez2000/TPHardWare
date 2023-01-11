@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 float* vectorGPUDense (float* input, float* Weight,float *output,int SxI,int Sxo,int ActiveFunction);
+=======
+float* vectorGPUDense (float* input, float* Weight,int SxI,int Sxo,int ActiveFunction);
+>>>>>>> dvt
 
 
 //-----------------------------------------------------------------------------------------------

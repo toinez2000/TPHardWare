@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 -o
+=======
+>>>>>>> dvt
 **Human Activity Recognition using CNN in Keras**
 
 

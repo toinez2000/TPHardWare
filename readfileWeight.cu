@@ -33,7 +33,14 @@ float* readfile() {
     fread(&val, sizeof(float), 1, fptr);
     WeightVector[i] = val;
     //printf("%f \n",val);
+<<<<<<< HEAD
 
     return WeightVector;
   }
+=======
+    }
+
+    return WeightVector;
+  
+>>>>>>> dvt
 }
