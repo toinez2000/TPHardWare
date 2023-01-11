@@ -1,1 +1,1 @@
-int modele();
+float* modele(float*);

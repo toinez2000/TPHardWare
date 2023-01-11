@@ -61,6 +61,7 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
 
   
   output[xo+ yo + zI *SxI*SxI/4] = activation_tanh(value/4); // moyenne de quatre élément 
+
 }
 
 
@@ -83,7 +84,7 @@ float* vectorGPUMeanPooling(float*input,int SxI,int SzI){
       dim3 threadsPerBlock( SxI/2, 1, 1 );
  
     	meanPooling<<<threadsPerBlock,blocks>>>(d_input, d_out, SxI, SzI);
-
+      cudaDeviceSynchronize();
     	cudaMemcpy(out, d_out, sizeof(float)*SxI*SxI*SzI/4 , cudaMemcpyDeviceToHost);
 	
 	

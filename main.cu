@@ -10,6 +10,7 @@
 
 #include "modele.h"
 #include "readfileWeight.h"
+#include "affichage.h"
 
 __global__ void cuda_hello(){
     printf("Hello World from GPU!\n");
@@ -61,10 +62,15 @@ int main() {
 
     
     
-
+    
 
 */
-    modele();
+
+    mainAffiche();
+    float* matriceinput =  init_matrix(32,32);
+
+
+    float*output =  modele(matriceinput);
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
