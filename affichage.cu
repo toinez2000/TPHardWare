@@ -87,6 +87,7 @@ int mainAffiche() {
 
 float*** readImage() {
   int i, j;
+  float* output;
   int ***img;
   int color[3]={255,0,0};
   unsigned int magic, nbImg, nbRows, nbCols;
@@ -127,7 +128,22 @@ float*** readImage() {
       img[i][j][2]=(int)val*color[2]/255;
     }
   }
+ 
+  
+  //flatten img et reshape en 32*32
+  output = (float *)malloc(sizeof(float)*32*32);
+  
+  for(int x=0;x<28;x++)
+        {
+            for(int y=0; y<28;y++){
+                output[x+y*28] = (float)((img[x][y][0]+img[x][y][1]+img[x][y][2])/3);
+            }
+        }
+        for(int z=0;z<240){
+            output[28*28+z] = 0;
+
+        }
 
   
-  return img;
+  return output;
 }
