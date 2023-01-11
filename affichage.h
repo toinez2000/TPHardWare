@@ -5,4 +5,9 @@ void imgColorPrint(int height, int width, int ***img);
 int mainAffiche();
 
 
-float*** readImage();
+/**
+function readImage read reshape and return the input of the neural network.
+**/
+
+
+float* readImage();
