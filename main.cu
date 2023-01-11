@@ -69,6 +69,22 @@ int main() {
     mainAffiche();
     float* matriceinput =  init_matrix(32,32);
 
+    float***img = readImage();
+
+
+        for(int x=0;x<28;x++)
+        {
+            for(int y=0; y<28;y++){
+                matriceinput[x+y*28] = img[x][y][1]/255;
+            }
+        }
+        for(int z=0;z<240){
+            matriceinput[28*28+z] = 0;
+
+        }
+
+
+
 
     float*output =  modele(matriceinput);
     //cudaDeviceSynchronize();

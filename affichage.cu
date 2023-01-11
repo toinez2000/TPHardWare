@@ -82,3 +82,52 @@ int mainAffiche() {
   
   exit(EXIT_SUCCESS);
 }
+
+
+
+float*** readImage() {
+  int i, j;
+  int ***img;
+  int color[3]={255,0,0};
+  unsigned int magic, nbImg, nbRows, nbCols;
+  unsigned char val;
+  FILE *fptr;
+
+  // Malloc image
+  img = (int ***)malloc(HEIGHT*sizeof(int **));
+  for(i=0; i<HEIGHT; i++){
+    img[i]= (int **)malloc(WIDTH*sizeof(int *));
+    for(j=0; j<WIDTH; j++){
+      img[i][j] = (int *)malloc(sizeof(int)*3);
+    }
+  }
+
+  //Open File
+  if((fptr = fopen("train-images.idx3-ubyte","rb")) == NULL){
+    printf("Can't open file");
+    exit(1);
+  }
+
+  //Read File
+  fread(&magic, sizeof(int), 1, fptr);
+  fread(&nbImg, sizeof(int), 1, fptr);
+  fread(&nbRows, sizeof(int), 1, fptr);
+  fread(&nbCols, sizeof(int), 1, fptr);
+/*
+  printf("Nb Magic : %u \n", magic);
+  printf("Nb Img : %u \n", nbImg);
+  printf("Nb Rows : %u \n", nbRows);
+  printf("Nb Cols : %u \n", nbCols);
+*/
+  for(i=0; i<HEIGHT; i++){
+    for(j=0; j<WIDTH; j++){ 
+      fread(&val, sizeof(unsigned char), 1, fptr);  
+      img[i][j][0]=(int)val*color[0]/255;
+      img[i][j][1]=(int)val*color[1]/255;
+      img[i][j][2]=(int)val*color[2]/255;
+    }
+  }
+
+  
+  return img;
+}

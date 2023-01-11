@@ -125,16 +125,16 @@ S1_data =vectorGPUDense(raw_data,W,SIZE_raw_data,SIZE_S1_data,1);
 */
 
 
-    C1_data =vectorGPUConv1(C1_kernel, raw_data,SIZE_raw_data,DEEP_raw_data,SIZE_C1_kernel,DEEP_K1 );
-    S1_data =vectorGPUMeanPooling(C1_data,SIZE_C1_data,DEEP_K1);
+    C1_data =vectorGPUConv1(C1_kernel, raw_data,SIZE_raw_data,DEEP_raw_data,SIZE_C1_kernel,DEEP_K1 );  //layer0
+    S1_data =vectorGPUMeanPooling(C1_data,SIZE_C1_data,DEEP_K1);  //layer1
 
 
-    C2_data =vectorGPUConv1(C2_kernel, S1_data,SIZE_S1_data,DEEP_K1,SIZE_C2_kernel,DEEP_K2 );
-    S2_data =vectorGPUMeanPooling(C2_data,SIZE_C2_data,DEEP_K2*DEEP_K1);
+    C2_data =vectorGPUConv1(C2_kernel, S1_data,SIZE_S1_data,DEEP_K1,SIZE_C2_kernel,DEEP_K2 );  //layer2
+    S2_data =vectorGPUMeanPooling(C2_data,SIZE_C2_data,DEEP_K2*DEEP_K1); //layer3
 
-  S3_data = vectorGPUDense (S2_data,WeightD1,SIZE_S2_data*SIZE_S2_data*DEEP_K2*DEEP_K1,SIZE_S3_data,TANH);
-  S4_data = vectorGPUDense (S3_data,WeightD2,SIZE_S3_data,SIZE_S4_data,TANH);
-  S5_data =vectorGPUDense (S4_data,WeightD3,SIZE_S4_data,SIZE_S5_data,SOFTMAX);
+  S3_data = vectorGPUDense (S2_data,WeightD1,SIZE_S2_data*SIZE_S2_data*DEEP_K2*DEEP_K1,SIZE_S3_data,TANH); //layer4
+  S4_data = vectorGPUDense (S3_data,WeightD2,SIZE_S3_data,SIZE_S4_data,TANH); //layer5
+  S5_data =vectorGPUDense (S4_data,WeightD3,SIZE_S4_data,SIZE_S5_data,SOFTMAX); //layer6
 
 
 //vectorGPUDense(raw_data,C1_kernel,C1_data,SIZE_raw_data*SIZE_raw_data,C1_kernel*C1_kernel,TANH);
