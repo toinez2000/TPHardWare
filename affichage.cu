@@ -85,7 +85,7 @@ int mainAffiche() {
 
 
 
-float*** readImage() {
+float* readImage() {
   int i, j;
   float* output;
   int ***img;
