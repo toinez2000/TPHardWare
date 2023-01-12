@@ -73,16 +73,21 @@ int main() {
 =======
 
     mainAffiche();
-    float* matriceinput =  init_matrix(32,32);
+    float* matriceinput =  readImage();
 
+
+printf("BeginMain \n");
+
+/*
+    print_matrix(matriceinput,32,32);*/
 
     float*output =  modele(matriceinput);
 >>>>>>> dvt
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
-
-
+    printf("output \n");
+    print_matrix(output,10,1);
 
 
 

@@ -79,3 +79,11 @@ Cela correspond bien à ce qui est attendu.
 
 
 *couche dense*
+
+
+
+
+
+
+
+TEST avec en entrée: 
