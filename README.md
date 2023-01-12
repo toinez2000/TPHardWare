@@ -110,7 +110,7 @@ On constate que l'image input est classée dans la classe 3. Je pense que cette 
 
 
 **execution du code**
-fonction utilisé: nvcc -cu && ./out
+fonction utilisée: nvcc -cu && ./out
 
 
 
