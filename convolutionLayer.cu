@@ -125,15 +125,23 @@ float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int S
 
     	conv3D<<<threadsPerBlock,blocks>>>(d_input, d_Kernel, d_out0, SxI, SzI, SxK,  SzK);  
 		cudaDeviceSynchronize();
-		dim3 blocks1( Sxo, 1, 1); 
-
-
-		addLayerOutput<<<threadsPerBlock,blocks1>>>(d_out0, d_out,SxI, SzI,  SxK,  SzK);
-		cudaDeviceSynchronize();
 		
-		addBias<<<SzK,Sxo*Sxo>>>(d_out, d_Kernel+SxK*SxK*SzI*SzK, Sxo, SzK);
-		cudaDeviceSynchronize();
-    	cudaMemcpy(out, d_out, sizeof(float)*Sxo*Sxo*Szo, cudaMemcpyDeviceToHost);
+		//printf("SzI = %d \n",SzI);
+		if(SzI>1){
+
+			dim3 blocks1( Sxo, 1, 1); 
+			addLayerOutput<<<threadsPerBlock,blocks1>>>(d_out0, d_out,SxI, SzI,  SxK,  SzK);
+			cudaDeviceSynchronize();
+		
+			addBias<<<SzK,Sxo*Sxo>>>(d_out, d_Kernel+SxK*SxK*SzI*SzK, Sxo, SzK);
+			cudaDeviceSynchronize();
+    		cudaMemcpy(out, d_out, sizeof(float)*Sxo*Sxo*Szo, cudaMemcpyDeviceToHost);
+			}
+		else{
+			addBias<<<SzK,Sxo*Sxo>>>(d_out, d_Kernel+SxK*SxK*SzI*SzK, Sxo, SzK);
+			cudaDeviceSynchronize();
+    		cudaMemcpy(out, d_out0, sizeof(float)*Sxo*Sxo*Szo, cudaMemcpyDeviceToHost);
+		}
 	
 	//free
     	cudaFree(d_Kernel);

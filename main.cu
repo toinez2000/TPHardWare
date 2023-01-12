@@ -67,31 +67,20 @@ int main() {
 */
 
     mainAffiche();
-    float* matriceinput =  init_matrix(32,32);
-
-    float***img = readImage();
+    float* matriceinput =  readImage();
 
 
-        for(int x=0;x<28;x++)
-        {
-            for(int y=0; y<28;y++){
-                matriceinput[x+y*28] = img[x][y][1]/255;
-            }
-        }
-        for(int z=0;z<240){
-            matriceinput[28*28+z] = 0;
+printf("BeginMain \n");
 
-        }
-
-
-
+/*
+    print_matrix(matriceinput,32,32);*/
 
     float*output =  modele(matriceinput);
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
-
-
+    printf("output \n");
+    print_matrix(output,10,1);
 
 
 

@@ -91,7 +91,8 @@ output0= (float*)malloc(sizeof(float) *Sxo);
        cudaDeviceSynchronize();
  	    addBias<<<Sxo,1>>>(d_out,d_Weight+SxI*Sxo); //add bias
       cudaDeviceSynchronize();
-      if(ActiveFunction==0){DTanH<<<1,Sxo>>>(d_out,Sxo); 
+      if(ActiveFunction==0){
+      DTanH<<<1,Sxo>>>(d_out,Sxo); 
       cudaDeviceSynchronize();
       
       } //TanH

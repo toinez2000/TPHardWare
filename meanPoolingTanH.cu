@@ -60,7 +60,7 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
   // Enregistrer la valeur de l'élément de sortie
 
   
-  output[xo+ yo + zI *SxI*SxI/4] = activation_tanh(value/4); // moyenne de quatre élément 
+  output[xo+ yo + zI*SxI*SxI/4] = activation_tanh(value/4); // moyenne de quatre élément 
 
 }
 

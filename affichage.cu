@@ -130,18 +130,26 @@ float* readImage() {
   }
  
   
-  //flatten img et reshape en 32*32
+  //flatten img and reshape 32*32
   output = (float *)malloc(sizeof(float)*32*32);
-  
+  float max =0;
   for(int x=0;x<28;x++)
         {
             for(int y=0; y<28;y++){
-                output[x+y*28] = (float)((img[x][y][0]+img[x][y][1]+img[x][y][2])/3);
+                output[x+y*28] = ((img[x][y][0]+img[x][y][1]+img[x][y][2])/3);
+
+                if (max<output[x+y*28])
+                { max = output[x+y*28];}
             }
         }
-        for(int z=0;z<240){
+        for(int z=0;z<240;z++){
             output[28*28+z] = 0;
 
+        }
+
+
+        for(int x=0;x<32*32;x++){
+          output[x]= ((output[x]/max)-0.5); //normalize
         }
 
   
