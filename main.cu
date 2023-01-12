@@ -27,20 +27,12 @@ void c_hello(){
 
 
 
-
-/* int main() {
-    c_hello();
-    return 0;
-}
-*/
-
-
 int main() {
  
 
-//readfile();
 
 
+//_________________________test multiplication and add matrice with CPU and GPU méthode 
  /*
     c_hello();
     cuda_hello<<<1,1>>>(); 
@@ -60,22 +52,15 @@ int main() {
 //float* matriceC = vectorGPUAdd (matriceA, matriceA, 2, 2);
 //float* matriceC = multimatriceGPU(matriceA, matriceA, 1000);
 
-    
-    
-    
-
 */
 
-    mainAffiche();
-    float* matriceinput =  readImage();
+    //mainAffiche();
+    float* matriceinput =  readImage();   //read matrice raw_data 
 
 
-printf("BeginMain \n");
+    printf("BeginMain \n");
 
-/*
-    print_matrix(matriceinput,32,32);*/
-
-    float*output =  modele(matriceinput);
+    float*output =  modele(matriceinput);  
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
