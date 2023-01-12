@@ -76,10 +76,14 @@ Cela correspond bien à ce qui est attendu.
 
 *couche dense*
 
+On teste la couche dense sans active function input size = 10 ;output size = 2  ;weight size = 2*10 
+input:                [1,2,3,4,5,6,7,8,9,10]
+weight:               [[1,1,0,0,0,0,0,0,0,0],[2,2,0,0,0,0,0,0,0,0]
+output Without bias:  [3,6]
+bias:                 [1,2]
+output :              [4,8]
 
 
+Cela correspond bien à ce qui est attendu: output[x] = sum_i(w[x][i]*i[x])+bias(x)
 
-
-
-
-TEST avec en entrée: 
+**
