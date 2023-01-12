@@ -4,7 +4,9 @@
 #include "functionMatrix.h"
 
 
-
+/**
+function init_matrix return a float matrix sizeX*sizeY init random value between (-1,1)
+**/
 
 
 
