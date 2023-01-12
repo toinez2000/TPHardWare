@@ -50,7 +50,7 @@ float* modele( float* raw_data){
     float *S4_data,*WeightD2;
     float *S5_data,*WeightD3;
 
-    // Allocate memory and mapping
+    // Allocate memory and mapping weight and bias
     
     float*WeightVector = readfile();
     
@@ -62,7 +62,7 @@ float* modele( float* raw_data){
         
 
         
-    //------------------------------------ test conv
+    //--------------------------------------------------------------------------------------- test conv
 
 /*
 
@@ -88,7 +88,7 @@ float* modele( float* raw_data){
 
 */
 
-//---------------------TEST DENSE
+//----------------------------------------------------------------------------------TEST DENSE
  
  
  /*
@@ -124,6 +124,34 @@ S1_data =vectorGPUDense(raw_data,W,SIZE_raw_data,SIZE_S1_data,1);
 
 */
 
+    
+    
+    //veref CONV
+    /*
+    printf("Kernel \n\n");
+    print_matrix(C1_kernel,SIZE_C1_kernel*DEEP_K1*DEEP_raw_data,SIZE_C1_kernel);
+    printf("raw_data \n\n");
+    print_matrix(raw_data,SIZE_raw_data*DEEP_raw_data,SIZE_raw_data);
+    printf("C1 \n\n");
+    print_matrix(C1_data,SIZE_C1_data*DEEP_K1,SIZE_C1_data);
+    printf("S1 \n\n");
+     print_matrix(S1_data,SIZE_S1_data*DEEP_K1,SIZE_S1_data);
+*/
+//------------------------------------------------- veref dense
+/*
+    printf("W \n\n");
+    print_matrix(W,SIZE_raw_data*SIZE_S1_data+SIZE_S1_data,1);
+    printf("raw_data \n\n");
+    print_matrix(raw_data,SIZE_raw_data,1);
+    printf("S1 \n\n");
+     print_matrix(S1_data,SIZE_S1_data,1);
+     */
+
+    
+    
+    
+    //______________________________________________________________modele
+    
 
     C1_data =vectorGPUConv1(C1_kernel, raw_data,SIZE_raw_data,DEEP_raw_data,SIZE_C1_kernel,DEEP_K1 );  //layer0
 
@@ -172,35 +200,6 @@ S1_data =vectorGPUDense(raw_data,W,SIZE_raw_data,SIZE_S1_data,1);
 
 
 //vectorGPUDense(raw_data,C1_kernel,C1_data,SIZE_raw_data*SIZE_raw_data,C1_kernel*C1_kernel,TANH);
-
-
-
-
-
-
-
-
-    //veref CONV
-    /*
-    printf("Kernel \n\n");
-    print_matrix(C1_kernel,SIZE_C1_kernel*DEEP_K1*DEEP_raw_data,SIZE_C1_kernel);
-    printf("raw_data \n\n");
-    print_matrix(raw_data,SIZE_raw_data*DEEP_raw_data,SIZE_raw_data);
-    printf("C1 \n\n");
-    print_matrix(C1_data,SIZE_C1_data*DEEP_K1,SIZE_C1_data);
-    printf("S1 \n\n");
-     print_matrix(S1_data,SIZE_S1_data*DEEP_K1,SIZE_S1_data);
-*/
-//------------------------------------------------- veref dense
-/*
-    printf("W \n\n");
-    print_matrix(W,SIZE_raw_data*SIZE_S1_data+SIZE_S1_data,1);
-    printf("raw_data \n\n");
-    print_matrix(raw_data,SIZE_raw_data,1);
-    printf("S1 \n\n");
-     print_matrix(S1_data,SIZE_S1_data,1);
-     */
-
 
 
 
