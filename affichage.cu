@@ -79,13 +79,15 @@ int mainAffiche() {
 
   // print image
   imgColorPrint(HEIGHT, WIDTH, img);
-  
-  exit(EXIT_SUCCESS);
+  return 0;
+  //exit(EXIT_SUCCESS);
 }
 
 
 
 float* readImage() {
+
+  printf("read input mnist \n");
   int i, j;
   float* output;
   int ***img;
@@ -94,14 +96,8 @@ float* readImage() {
   unsigned char val;
   FILE *fptr;
 
-  // Malloc image
-  img = (int ***)malloc(HEIGHT*sizeof(int **));
-  for(i=0; i<HEIGHT; i++){
-    img[i]= (int **)malloc(WIDTH*sizeof(int *));
-    for(j=0; j<WIDTH; j++){
-      img[i][j] = (int *)malloc(sizeof(int)*3);
-    }
-  }
+
+ 
 
   //Open File
   if((fptr = fopen("train-images.idx3-ubyte","rb")) == NULL){
@@ -120,23 +116,17 @@ float* readImage() {
   printf("Nb Rows : %u \n", nbRows);
   printf("Nb Cols : %u \n", nbCols);
 */
-  for(i=0; i<HEIGHT; i++){
-    for(j=0; j<WIDTH; j++){ 
-      fread(&val, sizeof(unsigned char), 1, fptr);  
-      img[i][j][0]=(int)val*color[0]/255;
-      img[i][j][1]=(int)val*color[1]/255;
-      img[i][j][2]=(int)val*color[2]/255;
-    }
-  }
- 
-  
-  //flatten img and reshape 32*32
-  output = (float *)malloc(sizeof(float)*32*32);
+
+ output = (float *)malloc(sizeof(float)*32*32);
   float max =0;
+
+  //flatten img and reshape 32*32
+ 
   for(int x=0;x<28;x++)
         {
             for(int y=0; y<28;y++){
-                output[x+y*28] = ((img[x][y][0]+img[x][y][1]+img[x][y][2])/3);
+                fread(&val, sizeof(unsigned char), 1, fptr);
+                output[x+y*28] = (int)val*color[0]/255;
 
                 if (max<output[x+y*28])
                 { max = output[x+y*28];}
@@ -147,11 +137,11 @@ float* readImage() {
 
         }
 
-
+/*
         for(int x=0;x<32*32;x++){
-          output[x]= ((output[x]/max)-0.5); //normalize
+          output[x]= ((output[x]/max)-0.5)*2; //normalize
         }
-
+*/
   
   return output;
 }

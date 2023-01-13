@@ -51,7 +51,7 @@ float* modele( float* raw_data){
     float *S5_data,*WeightD3;
 
     // Allocate memory and mapping weight and bias
-    
+    printf("read file \n");
     float*WeightVector = readfile();
     
     C1_kernel = WeightVector;
@@ -59,8 +59,15 @@ float* modele( float* raw_data){
     WeightD1 = C2_kernel+SIZE_C2_kernel*SIZE_C2_kernel*DEEP_K2*DEEP_K1+DEEP_K2;
     WeightD2 = WeightD1+SIZE_S2_data*SIZE_S3_data+SIZE_S3_data;
     WeightD3 = WeightD2+SIZE_S3_data*SIZE_S4_data+SIZE_S4_data;
-        
 
+/*
+    printf("Kernel2 \n\n");
+    print_matrix(C2_kernel,SIZE_C2_kernel*DEEP_K2*DEEP_K1,SIZE_C2_kernel);
+*/
+/*
+    printf("WeightD1  \n\n");
+    print_matrix(WeightD1,SIZE_C2_kernel*SIZE_C2_kernel*DEEP_K2*DEEP_K1,1);
+*/
         
     //--------------------------------------------------------------------------------------- test conv
 
@@ -155,47 +162,47 @@ S1_data =vectorGPUDense(raw_data,W,SIZE_raw_data,SIZE_S1_data,1);
 
     C1_data =vectorGPUConv1(C1_kernel, raw_data,SIZE_raw_data,DEEP_raw_data,SIZE_C1_kernel,DEEP_K1 );  //layer0
 
-    /*
+    
     printf("C1 \n");
     print_matrix(C1_data,28*6,28);
     
-    */
+    
 
 
     S1_data =vectorGPUMeanPooling(C1_data,SIZE_C1_data,DEEP_K1);  //layer1
 
-    /*
+    
     printf("S1 \n");
     print_matrix(S1_data,14*6,14);
-    */
+    
 
     C2_data =vectorGPUConv1(C2_kernel, S1_data,SIZE_S1_data,DEEP_K1,SIZE_C2_kernel,DEEP_K2 );  //layer2
 
 
-    /*
+    
     printf("C2 \n");
     print_matrix(C2_data,10*16,10);
-    */
+    
     S2_data =vectorGPUMeanPooling(C2_data,SIZE_C2_data,DEEP_K2); //layer3
-    /*
+    
     printf("S2 \n");
     print_matrix(S2_data,5*16,5);
-    */
+    
 
-  S3_data = vectorGPUDense (S2_data,WeightD1,SIZE_S2_data*SIZE_S2_data*DEEP_K2,SIZE_S3_data,TANH); //layer4
+    S3_data = vectorGPUDense (S2_data,WeightD1,SIZE_S2_data*SIZE_S2_data*DEEP_K2,SIZE_S3_data,TANH); //layer4
 
-    /*
+    
     printf("S3 \n");
     print_matrix(S3_data,120,1);
-    */
+    
 
-  S4_data = vectorGPUDense (S3_data,WeightD2,SIZE_S3_data,SIZE_S4_data,TANH); //layer5
-    /*
+    S4_data = vectorGPUDense (S3_data,WeightD2,SIZE_S3_data,SIZE_S4_data,TANH); //layer5
+    
     printf("S4 \n");
     print_matrix(S4_data,84,1);
-    */
+    
 
-  S5_data =vectorGPUDense (S4_data,WeightD3,SIZE_S4_data,SIZE_S5_data,SOFTMAX); //layer6
+    S5_data =vectorGPUDense (S4_data,WeightD3,SIZE_S4_data,SIZE_S5_data,SOFTMAX); //layer6
 
 
 

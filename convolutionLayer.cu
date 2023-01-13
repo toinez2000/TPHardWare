@@ -124,7 +124,7 @@ float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int S
       
 
     	conv3D<<<threadsPerBlock,blocks>>>(d_input, d_Kernel, d_out0, SxI, SzI, SxK,  SzK);  
-		cudaDeviceSynchronize();
+		//cudaDeviceSynchronize();
 		
 		//printf("SzI = %d \n",SzI);
 		if(SzI>1){

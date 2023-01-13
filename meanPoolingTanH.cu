@@ -86,7 +86,7 @@ float* vectorGPUMeanPooling(float*input,int SxI,int SzI){
      	 dim3 threadsPerBlock( SxI/2, 1, 1 ); //theads x for colone output
  
     	meanPooling<<<threadsPerBlock,blocks>>>(d_input, d_out, SxI, SzI);  //layer meanpooling
-      cudaDeviceSynchronize();
+      	cudaDeviceSynchronize();
     	cudaMemcpy(out, d_out, sizeof(float)*SxI*SxI*SzI/4 , cudaMemcpyDeviceToHost); 
 	
 	

@@ -54,7 +54,7 @@ int main() {
 
 */
 
-    //mainAffiche();
+    mainAffiche();
     float* matriceinput =  readImage();   //read matrice raw_data 
 
 
@@ -68,7 +68,23 @@ int main() {
     print_matrix(output,10,1);
 
 
+    
+    //classe select by modele
 
+    float max = 0;
+    int iPmax = 0;
+    for(int x=0;x<10;x++){
+        if (max<output[x])
+        {
+            max = output[x];
+            iPmax = x+1;
+        }
+    }
+
+    printf("le modele reconnait le chiffre : %d \n",iPmax);
+   
+    free(output);
+    
 
     return 0;
 }
