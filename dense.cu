@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <assert.h>
 #include <cuda.h>
@@ -46,15 +47,18 @@ __global__ void softMax(float *input,int SxI,float sum)
 {
   int ip = threadIdx.x;
 
-  input[ip] = input[ip]/sum;
+  input[ip] = input[ip]/(sum+0.0000001);
 }
 
 //function calcul the exp of each output
 __global__ void Expo(float *input,int SxI)
 {
   int ip = threadIdx.x;
+  if (input[ip] >  100000){input[ip] =0;}
   input[ip] = exp(input[ip]);
->>>>>>> dvt
+  
+  
+
 }
 
 
@@ -127,14 +131,13 @@ output0= (float*)malloc(sizeof(float) *Sxo);
  
       
 
-    	 Dense<<<blocks,1>>>(d_input, d_Weight, d_out, SxI,  Sxo);   //calcul each output of dense without bias
-       cudaDeviceSynchronize();
+    	Dense<<<blocks,1>>>(d_input, d_Weight, d_out, SxI,  Sxo);   //calcul each output of dense without bias
+      cudaDeviceSynchronize();
  	    addBias<<<Sxo,1>>>(d_out,d_Weight+SxI*Sxo); //add bias
       cudaDeviceSynchronize();
       if(ActiveFunction==0){
       DTanH<<<1,Sxo>>>(d_out,Sxo); 
       cudaDeviceSynchronize();
-      
       } //TanH
       else{
           

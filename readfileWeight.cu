@@ -20,7 +20,7 @@ float* readfile() {
 
 
   //Open File
-  if((fptr = fopen("valeurs.dat","rb")) == NULL){
+  if((fptr = fopen("weight.dat","rb")) == NULL){
     printf("Can't open file");
     exit(1);
   }

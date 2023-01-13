@@ -30,20 +30,12 @@ void c_hello(){
 
 
 
-
-/* int main() {
-    c_hello();
-    return 0;
-}
-*/
-
-
 int main() {
  
 
-//readfile();
 
 
+//_________________________test multiplication and add matrice with CPU and GPU méthode 
  /*
     c_hello();
     cuda_hello<<<1,1>>>(); 
@@ -63,26 +55,18 @@ int main() {
 //float* matriceC = vectorGPUAdd (matriceA, matriceA, 2, 2);
 //float* matriceC = multimatriceGPU(matriceA, matriceA, 1000);
 
-    
-    
-    
-
 */
 <<<<<<< HEAD
     modele();
 =======
 
     mainAffiche();
-    float* matriceinput =  readImage();
+    float* matriceinput =  readImage();   //read matrice raw_data 
 
 
-printf("BeginMain \n");
+    printf("BeginMain \n");
 
-/*
-    print_matrix(matriceinput,32,32);*/
-
-    float*output =  modele(matriceinput);
->>>>>>> dvt
+    float*output =  modele(matriceinput);  
     //cudaDeviceSynchronize();
     //print_matrix(matriceC,10,10);
 
@@ -90,7 +74,23 @@ printf("BeginMain \n");
     print_matrix(output,10,1);
 
 
+    
+    //classe select by modele
 
+    float max = 0;
+    int iPmax = 0;
+    for(int x=0;x<10;x++){
+        if (max<output[x])
+        {
+            max = output[x];
+            iPmax = x+1;
+        }
+    }
+
+    printf("le modele reconnait le chiffre : %d \n",iPmax);
+   
+    free(output);
+    
 
     return 0;
 }

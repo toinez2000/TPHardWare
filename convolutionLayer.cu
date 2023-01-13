@@ -108,21 +108,6 @@ __global__ void addBias(float* M, float*bias, int SxI, int SzI) {
 float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int SzK)
 {
 
-<<<<<<< HEAD
-	float *out;
-	float *d_input, *d_Kernel, *d_out;
-  int Sxo = SxI-SxK+1;
-  int Szo = SzK;
-
-	out = (float*)malloc(sizeof(float) * Sxo*Sxo*Szo);
-
-	cudaMalloc((void**)&d_input, sizeof(float)*SxI*SxI*SzI);
-    	cudaMalloc((void**)&d_Kernel, sizeof(float)*SxK*SxK*SzK*SzI+SzK);
-    	cudaMalloc((void**)&d_out, sizeof(float)*Sxo*Sxo*Szo);
-
-	
-    	cudaMemcpy(d_Kernel, Kernel, sizeof(float) *SxK*SxK*SzK*SzI+SzK, cudaMemcpyHostToDevice);
-=======
 	float *out ;
 	float *d_input, *d_Kernel, *d_out, *d_out0;  
   	int Sxo = SxI-SxK+1;  //size output x convolution layer
@@ -143,7 +128,6 @@ float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int S
 
 	
     	cudaMemcpy(d_Kernel, Kernel, sizeof(float) *(SxK*SxK*SzK*SzI+SzK), cudaMemcpyHostToDevice);
->>>>>>> dvt
     	cudaMemcpy(d_input, input, sizeof(float) *SxI*SxI*SzI, cudaMemcpyHostToDevice);
 
 	// Main function
@@ -166,7 +150,7 @@ float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int S
       
 
     	conv3D<<<threadsPerBlock,blocks>>>(d_input, d_Kernel, d_out0, SxI, SzI, SxK,  SzK);  
-		cudaDeviceSynchronize();
+		//cudaDeviceSynchronize();
 		
 		//printf("SzI = %d \n",SzI);
 		if(SzI>1){

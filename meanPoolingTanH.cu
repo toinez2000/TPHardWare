@@ -28,7 +28,7 @@ __device__ float activation_tanh(float M)
 
 __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
   // Calculer les indices de l'élément de sortie courant
-  int xo = blockIdx.x * blockDim.x; // ligne de l'image de sortie pour une profondeur donné 
+  int xo = blockIdx.x * blockDim.x; // ligne de l'image de sortie pour une profondeur donnée 
   int yo = threadIdx.x; // element de la ligne 
 
   int zI = threadIdx.z ;   //profondeur du kernel à utiliser 
@@ -46,7 +46,7 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
 			
 
 
-	        int xI = 2*xo+ i*SxI;  // lien entre xI et x0
+	        int xI = 2*xo+ i*SxI;  // lien entre xI et xo
 	        int yI = 2*yo + j;
        
 
@@ -60,7 +60,7 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
   // Enregistrer la valeur de l'élément de sortie
 
   
-  output[xo+ yo + zI*SxI*SxI/4] = activation_tanh(value/4); // moyenne de quatre élément 
+  output[xo+ yo + zI*SxI*SxI/4] = activation_tanh(value/4); // tanh(moyenne de quatre éléments )
 
 >>>>>>> dvt
 }
@@ -71,26 +71,24 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
 
 float* vectorGPUMeanPooling(float*input,int SxI,int SzI){
     	float *out;
-	    float *d_input, *d_out;
+	float *d_input, *d_out;
 
-	    out = (float*)malloc(sizeof(float) *SxI*SxI*SzI/4);
-
-	    cudaMalloc((void**)&d_input, sizeof(float)*SxI*SxI*SzI);
-      cudaMalloc((void**)&d_out, sizeof(float)* SxI*SxI*SzI/4);
-      cudaMemcpy(d_input, input, sizeof(float) * SxI*SxI*SzI, cudaMemcpyHostToDevice);
+	
+	//alloc memory for output 
+	out = (float*)malloc(sizeof(float) *SxI*SxI*SzI/4);
+	//Malloc cuda
+      	cudaMalloc((void**)&d_input, sizeof(float)*SxI*SxI*SzI);
+      	cudaMalloc((void**)&d_out, sizeof(float)* SxI*SxI*SzI/4);
+      	cudaMemcpy(d_input, input, sizeof(float) * SxI*SxI*SzI, cudaMemcpyHostToDevice);
 
 	// Main function
  
-      dim3 blocks( SxI/2, 1, SzI ); 
-      dim3 threadsPerBlock( SxI/2, 1, 1 );
+     	 dim3 blocks( SxI/2, 1, SzI );  //blocks x for line output, block z for deep input
+     	 dim3 threadsPerBlock( SxI/2, 1, 1 ); //theads x for colone output
  
-    	meanPooling<<<threadsPerBlock,blocks>>>(d_input, d_out, SxI, SzI);
-<<<<<<< HEAD
-
-=======
-      cudaDeviceSynchronize();
->>>>>>> dvt
-    	cudaMemcpy(out, d_out, sizeof(float)*SxI*SxI*SzI/4 , cudaMemcpyDeviceToHost);
+    	meanPooling<<<threadsPerBlock,blocks>>>(d_input, d_out, SxI, SzI);  //layer meanpooling
+      	cudaDeviceSynchronize();
+    	cudaMemcpy(out, d_out, sizeof(float)*SxI*SxI*SzI/4 , cudaMemcpyDeviceToHost); 
 	
 	
     	cudaFree(d_input);
