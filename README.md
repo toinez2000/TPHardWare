@@ -103,14 +103,16 @@ Résultat du modele sur l'image input :
 
 On obtient :
 
-![image](https://user-images.githubusercontent.com/92809568/212178305-55e9fa03-df42-4a5a-9a4a-e7764e31443a.png)
+![image](https://user-images.githubusercontent.com/92809568/212394310-b2304944-118d-4a07-9643-af5efa8d5c15.png)
 
 
-On constate que l'image input est classée dans la classe 3. Je pense que cette mauvaise classification provient du manque d'information sur l'image d'entrée du modele qui en l'état est reshape de 28*28 => 32*32 puis on obtient une image en nuance de gris en moyennant sur les 3 couleurs raw_data = (img[x][y][0]+img[x][y][1]+img[x][y][2])/3 enfin on normalise entre -1 et 1.
+
+On constate que l'image input est bien classé dans la classe 5 en revanche il arrive que le modele ne donne pas toujours le bon résultat il semble que cela vienne de la derinere couche dense et de la fonction softmax. En effet il arrive que le calcule de la fonction d'activation softmax donne un résultat du type infini sur infini. Dans ce cas le résultat est abérant.  
 
 
 **execution du code**
-fonction utilisée: nvcc -cu && ./out
+fonction utilisée: nvcc -cu pour compiler
+et time ./a.out pur executer
 
 
 
