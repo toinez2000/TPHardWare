@@ -10,10 +10,7 @@
 
 #include "modele.h"
 #include "readfileWeight.h"
-<<<<<<< HEAD
-=======
 #include "affichage.h"
->>>>>>> dvt
 
 __global__ void cuda_hello(){
     printf("Hello World from GPU!\n");
@@ -56,9 +53,6 @@ int main() {
 //float* matriceC = multimatriceGPU(matriceA, matriceA, 1000);
 
 */
-<<<<<<< HEAD
-    modele();
-=======
 
     mainAffiche();
     float* matriceinput =  readImage();   //read matrice raw_data 

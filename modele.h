@@ -6,4 +6,3 @@
 
 
 float* modele(float*);
->>>>>>> dvt

@@ -12,11 +12,7 @@ __global__ void addBias(float *input,float *bias){
     
   int ip = threadIdx.x;
 
-<<<<<<< HEAD
-  output[ip] += bias[ip];
-=======
   input[ip] += bias[ip];
->>>>>>> dvt
 
 }
 
@@ -28,7 +24,6 @@ __global__ void Dense(float *input,float *weight,float *output,int SxI,int Sxo){
 
   for(int ip =0;ip < SxI;ip++){
     output[tabIP] += input[ip]*weight[tabIP*SxI+ip];}
->>>>>>> dvt
 
 }
 
@@ -69,27 +64,6 @@ __global__ void Expo(float *input,int SxI)
 
 //-----------------------------------------------------------------------------------
 
-<<<<<<< HEAD
-float* vectorGPUDense (float* input, float* Weight,float *output,int SxI,int Sxo,int ActiveFunction)
-{
-
-  float *sum;
-  sum = 0;
-	float *d_input, *d_Weight, *d_out, *d_sum;
-
-
-
-
-	cudaMalloc((void**)&d_input, sizeof(float)*SxI);
-    	cudaMalloc((void**)&d_Weight, sizeof(float)*SxI*Sxo+Sxo);
-    	cudaMalloc((void**)&d_out, sizeof(float)*Sxo);
-      cudaMalloc((void**)&d_sum, sizeof(float));
-	
-    	cudaMemcpy(d_Weight, Weight, sizeof(float) *SxI*Sxo+Sxo, cudaMemcpyHostToDevice);
-    	cudaMemcpy(d_input, input, sizeof(float) *SxI, cudaMemcpyHostToDevice);
-      cudaMemcpy(d_out,output,sizeof(float) *Sxo,cudaMemcpyHostToDevice);
-      cudaMemcpy(d_sum,sum,sizeof(float),cudaMemcpyHostToDevice);
-=======
 float* vectorGPUDense (float* input, float* Weight,int SxI,int Sxo,int ActiveFunction)
 {
 
@@ -115,19 +89,6 @@ output0= (float*)malloc(sizeof(float) *Sxo);
 	// Main function
 
     dim3 blocks(Sxo); 
-<<<<<<< HEAD
-    dim3 threadsPerBlock(SxI);
- 
-      
-
-    	 Dense<<<threadsPerBlock,blocks>>>(d_input, d_Weight, d_out, SxI,  Sxo);   //SIZE_C1_kernel
- 	 addBias<<<Sxo,1>>>(d_out,d_Weight+SxI*Sxo);
-      if(ActiveFunction==0){DTanH<<<1,Sxo>>>(d_out,Sxo);} //TanH
-      else{
-          
-          sumExpo<<<1,Sxo>>>(d_out,Sxo,d_sum);
-          softMax<<<1,Sxo>>>(d_out,Sxo,d_sum);
-=======
  
       
 
@@ -151,7 +112,6 @@ output0= (float*)malloc(sizeof(float) *Sxo);
 
           softMax<<<1,Sxo>>>(d_out,Sxo,sum);
           cudaDeviceSynchronize();
->>>>>>> dvt
       }
 
     	cudaMemcpy(output, d_out, sizeof(float)*Sxo, cudaMemcpyDeviceToHost);
@@ -160,10 +120,6 @@ output0= (float*)malloc(sizeof(float) *Sxo);
     	cudaFree(d_input);
     	cudaFree(d_out);
 
-<<<<<<< HEAD
-
-=======
   return output;
   
->>>>>>> dvt
 }

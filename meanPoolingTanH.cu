@@ -62,7 +62,6 @@ __global__ void meanPooling(float* input, float* output, int SxI, int SzI) {
   
   output[xo+ yo + zI*SxI*SxI/4] = activation_tanh(value/4); // tanh(moyenne de quatre éléments )
 
->>>>>>> dvt
 }
 
 

@@ -8,8 +8,6 @@
 #include "convolutionLayer.h"
 #include "vector_add_N_P.h"
 
-<<<<<<< HEAD
-=======
 __global__ void addLayerOutput(float* input, float* output, int SxI, int SzI, int SxK, int SzK) {
   // Calculer les indices de l'élément de sortie courant
   int xo = blockIdx.x * blockDim.x; // ligne de l'image de sortie pour une Deep input et output donnée
@@ -34,7 +32,6 @@ __global__ void addLayerOutput(float* input, float* output, int SxI, int SzI, in
 
 
 
->>>>>>> dvt
 __global__ void conv3D(float* input, float* kernel, float* output, int SxI, int SzI, int SxK, int SzK) {
   // Calculer les indices de l'élément de sortie courant
   int xo = blockIdx.x * blockDim.x; // ligne de l'image de sortie pour une profondeur donnée 
@@ -62,19 +59,11 @@ __global__ void conv3D(float* input, float* kernel, float* output, int SxI, int 
 			int decalage = blockIdx.x*(SxK-1);
 
 
-<<<<<<< HEAD
-          int xI = xo+ i*SxI + decalage +zI*(SxI*SxI);  // lien entre xI et x0
-	        int yI = yo + j;
-          	// Appliquer le filtre à l'élément de l'image courant
-           value += input[xI+ yI] * kernel[i*SxK + j + zK*SxK*SxK+ zI*SzK*SxK*SxK];
-          //printf("xo = %d,yo = %d, zI = %d, zk =%d , indiceInput = %d indiceKernel= %d \n",xo,yo,zI,zK,xI+ yI,i*SxK + j + zK*SxK*SxK);
-=======
           int xI = xo+ i*SxI + decalage ;  // lien entre xI et x0
 	        int yI = yo + j;
           	// Appliquer le filtre à l'élément de l'image courant
            value += input[xI+ yI+zI*(SxI*SxI)] * kernel[i*SxK + j + zK*SxK*SxK+ zI*SzK*SxK*SxK];
           //printf("xo = %d,yo = %d, zI = %d, zk =%d , indiceInput = %d indiceKernel= %d \n",xo,yo,zI,zK,xI+ yI,i*SxK + j + zK*SxK*SxK + zI*SzK*SxK*SxK);
->>>>>>> dvt
           //printf("xo = %f ,indiceK = %d \n",kernel[i*SxK + j + zK*SxK*SxK],i*SxK + j + zK*SxK*SxK);
 	      }
 	    }
@@ -90,13 +79,8 @@ __global__ void addBias(float* M, float*bias, int SxI, int SzI) {
   int yo = threadIdx.x; // element 
  
 
-<<<<<<< HEAD
-     
-    output[xo*SxI*SxI+ yo] += bias[deep];
-=======
      //printf("bias = %f ", bias[deep]);
     M[deep*SxI*SxI+ yo] += bias[deep];
->>>>>>> dvt
   
          
 }
@@ -134,16 +118,6 @@ float* vectorGPUConv1 (float* Kernel, float* input,int SxI,int SzI,int SxK,int S
     	//int block_size = atoi(argv[2]);
     	//int grid_size = atoi(argv[1]);
  
-<<<<<<< HEAD
-    dim3 blocks( Sxo, 1, SzK ); 
-    dim3 threadsPerBlock( Sxo, 1, SzI );
- 
-      
-
-    	conv3D<<<threadsPerBlock,blocks>>>(d_input, d_Kernel, d_out, SxI, SzI, SxK,  SzK);   //SIZE_C1_kernel
-	addBias<<<Sxo*Sxo,SzK>>>(d_out, d_Kernel+SxK*SxK*SzI*SzK, Sxo, SzK);
-	
-=======
     dim3 blocks( Sxo, 1, SzI ); 
     dim3 threadsPerBlock( Sxo, 1, SzK );
  

@@ -17,11 +17,7 @@
 #define SIZE_C1_kernel 5
 #define DEEP_K1 6
 #define SIZE_C1_data (SIZE_raw_data-SIZE_C1_kernel+1)
-<<<<<<< HEAD
-#define SIZE_S1_data (SIZE_C1_data/2)        //14
-=======
 #define SIZE_S1_data  (SIZE_C1_data/2)        //14
->>>>>>> dvt
 
 #define SIZE_C2_kernel 5
 #define DEEP_K2 16
@@ -46,15 +42,9 @@
 
 
 
-<<<<<<< HEAD
-int modele(){
-
-    float *raw_data, *C1_data,*S1_data,*C1_kernel;
-=======
 float* modele( float* raw_data){
 
     float *C1_data,*S1_data,*C1_kernel;
->>>>>>> dvt
     float *C2_data,*S2_data,*C2_kernel;
     float *S3_data,*WeightD1;
     float *S4_data,*WeightD2;
@@ -217,33 +207,18 @@ S1_data =vectorGPUDense(raw_data,W,SIZE_raw_data,SIZE_S1_data,1);
 
 
 //vectorGPUDense(raw_data,C1_kernel,C1_data,SIZE_raw_data*SIZE_raw_data,C1_kernel*C1_kernel,TANH);
->>>>>>> dvt
 
-
-
-
-
-<<<<<<< HEAD
-    cudaDeviceSynchronize();
 
 
 
 //free
->>>>>>> dvt
     free(raw_data);
     free(WeightVector);
     free(S1_data);
     free(S2_data);
     free(S3_data);
     free(S4_data);
-<<<<<<< HEAD
-    free(S5_data);
-  
-
-    return 0;
-=======
     //free(S5_data);
 
     return S5_data;
->>>>>>> dvt
 }
