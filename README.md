@@ -1,4 +1,5 @@
 ***Human Activity Recognition using CNN in Keras***
+ Antoine Zundel et Alexandre Philippon
 
 
 L'objectif de ce tp est de programmer un modele de reconnaisance CNN en cuda. Nous utiliserons ainsi le GPU pour optimiser les performances d'execution de notre modele.
